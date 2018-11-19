@@ -215,11 +215,11 @@ def check_list():
         mns = mns + "\nFecha bloqueo DNS BT:\t\t{}".format(DateDNSblocked)
         if DateList_segs > DateDNSblocked_segs:
             mns = mns + "\n\n\t"
-            mns = mns + block_list()
-        print(mns)
+            #mns = mns + block_list()
+        #print(mns)
         # Envio de correo
         subject = "Listado ChildPorn"
-        #correo.enviar("juan.ramirezangel@bt.com", subject, mns)
+        correo.enviar("juan.ramirezangel@bt.com", subject, mns)
     # Elimina files temporales
     clean_files()
 
