@@ -1,0 +1,2 @@
+cloudfront.net
+hwcdn.net

@@ -64,6 +64,15 @@ def url2domain(url):
     return wildcard + '\n'
 
 
+def check_ignoreDomain(domain):
+    with open(PATH + 'ignoreDomain.txt') as dataf:
+        for line in dataf:
+            if domain in line:
+               return True
+               break
+        return False
+
+
 def domain2bindfile(domain):
     part1 = 'zone "'
     part2 = '"{\n\ttype master;\n\t'\
@@ -136,7 +145,10 @@ def block_list():
     bindfile_ptr = open(BIND_FILE, 'w')
     with open(PATH + 'childporn_dominios.txt', 'r') as fin:
         for line in nonblank_lines(fin):
-            bindfile_ptr.write(domain2bindfile(line))
+            if check_ignoreDomain(line):
+                pass
+            else:
+                bindfile_ptr.write(domain2bindfile(line))
     bindfile_ptr.close()
     # Revisa si el archivo generado no tiene errores de sintaxis.
     cmd = "named-checkconf /etc/bind/named.conf"
@@ -215,7 +227,7 @@ def check_list():
         mns = mns + "\nFecha bloqueo DNS BT:\t\t{}".format(DateDNSblocked)
         if DateList_segs > DateDNSblocked_segs:
             mns = mns + "\n\n\t"
-            #mns = mns + block_list()
+            mns = mns + block_list()
         #print(mns)
         # Envio de correo
         subject = "Listado ChildPorn"
